@@ -1,20 +1,22 @@
 from gtts import gTTS
-import sys
+import os
 
-def main():
-    wordings = TextToSpeech()
+# Function to convert text to speech with word omission
+def text_to_speech_with_omission(text, omit_word):
+    # Replace the omit_word with an empty string to omit it
+    text = text.replace(omit_word, "")
 
+    # Initialize gTTS with the modified text
+    tts = gTTS(text)
 
-def TextToSpeech():
-    counter = 0
-    with open(sys.argv[1]) as textFile:
-        for words in textFile:
-            if words == sys.argv[3]:
-                counter +=1
-            else:
-                pass
-    tts = gTTS(f"{sys.argv[3]} appeared a total of {counter} times")
-    tts.save(sys.argv[2])
+    # Save the speech to an audio file (e.g., output.mp3)
+    tts.save("output.mp3")
 
+    # Play the audio using your system's default player
+    os.system("start output.mp3")
 
-main()
+if __name__ == "__main__":
+    input_text = "This is a sample sentence. We can omit specific words from this sentence."
+    word_to_omit = "omit"
+
+    text_to_speech_with_omission(input_text, word_to_omit)
